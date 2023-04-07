@@ -1,0 +1,7 @@
+network:
+  version: 2
+  ethernets:
+    eno1:
+      dhcp4: true
+    eno2:
+      dhcp4: true
