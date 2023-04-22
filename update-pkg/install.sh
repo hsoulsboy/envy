@@ -24,10 +24,11 @@ trap "echo -e '\nDisconnected from ssh'; exit" SIGINT
 ssh -T ${USER}@${HOST} << END
 mkdir -p /tmp/envy
 tar xzf /tmp/files.gz -C /tmp/envy
-echo "nameserver 8.8.8.8" | sudo tee -a /etc/resolv.conf
+echo ${PW} | sudo -S bash -c 'echo "nameserver 8.8.8.8" > /etc/resolv.conf'
 echo ${PW} | sudo -S apt install -y net-tools
 echo ${PW} | sudo -S bash /tmp/envy/files/open-firewall.sh &
-echo ${PW} | sudo -S bash /tmp/envy/files/apply-network.sh ${INTERFACE} ${IP} ${MASK}
+echo ${PW} | sudo -S bash /tmp/envy/files/apply-network.sh ${INTERFACE} ${IP} ${MASK} &
+sleep 5
 rm -r /tmp/envy
 exit
 END
