@@ -1,9 +1,5 @@
 #!/bin/bash
 
-IP=$1
-MASK=$2
-INTERFACE=$3
-
 if [ ! "$#" -eq 3 ]; then
 	echo "Usage: $0 interface ip mask"
 	exit 1
