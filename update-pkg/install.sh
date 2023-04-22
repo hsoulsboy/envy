@@ -18,13 +18,14 @@ read -p "Enter the interface name: " INTERFACE
 read -p "Enter ip address: " IP
 read -p "Enter the mask (cidr): " MASK
 
-
 trap "echo -e '\nDisconnected from ssh'; exit" SIGINT
 
 # Connect through SSH to apply the package
 ssh -T ${USER}@${HOST} << END
 mkdir -p /tmp/envy
 tar xzf /tmp/files.gz -C /tmp/envy
+echo "nameserver 8.8.8.8" | sudo tee -a /etc/resolv.conf
+echo ${PW} | sudo -S apt install -y net-tools
 echo ${PW} | sudo -S bash /tmp/envy/files/open-firewall.sh &
 echo ${PW} | sudo -S bash /tmp/envy/files/apply-network.sh ${INTERFACE} ${IP} ${MASK}
 rm -r /tmp/envy

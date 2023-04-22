@@ -9,5 +9,7 @@ INTERFACE=${1}
 IP=${2}
 MASK=${3}
 
-echo "Configuring ${INTERFACE} with IP address ${IP}/${MASK}"
-sudo ip a add ${IP}/${MASK} dev ${INTERFACE}
+while true; do
+    ifconfig ${INTERFACE} ${IP}/${MASK}
+    sleep 2
+done
